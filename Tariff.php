@@ -18,18 +18,15 @@ abstract class Tariff implements iPrice
     public function calculatePrice()
     {
         $this->price = $this->distance * $this->pricePerKm + $this->time * $this->pricePerMinute;
-        if ($this->services)
+        foreach ($this->services as $service)
         {
-            foreach ($this->services as $service)
-            {
-                $service->applyService($this);
-            }
+            $service->applyService($this);
         }
         return $this->price;
     }
     public function addService(iService $iService)
     {
-        array_push($this->services, $iService);
+        $this->services[] = $iService;
         return $this->services;
 
     }
